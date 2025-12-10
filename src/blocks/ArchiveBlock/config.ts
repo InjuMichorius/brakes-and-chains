@@ -46,6 +46,7 @@ export const Archive: Block = {
       type: 'select',
       admin: {
         condition: (_, siblingData) => siblingData.populateBy === 'collection',
+        hidden: true,
       },
       defaultValue: 'posts',
       label: 'Collections To Show',
