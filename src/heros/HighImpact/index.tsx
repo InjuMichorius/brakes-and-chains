@@ -42,7 +42,7 @@ export const HighImpactHero: React.FC<Page['hero']> = ({ links, media, richText 
         )}
       </div>
       <div className="absolute inset-0 bg-black/60"></div>
-      <div className="absolute bottom-[-3rem] w-full grid grid-rows-3 auto-cols-[32px] grid-flow-col gap-0 select-none">
+      <div className="absolute bottom-[-3rem] w-full grid grid-rows-3 auto-cols-[32px] grid-flow-col gap-0 select-none overflow-x-hidden">
         {Array.from({ length: 100 }).map((_, i) => (
           <React.Fragment key={i}>
             <div className={`w-[2rem] h-[2rem] ${i % 2 === 0 ? 'bg-white' : 'bg-black'}`}></div>
