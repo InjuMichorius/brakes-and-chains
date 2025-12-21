@@ -71,6 +71,7 @@ export interface Config {
     posts: Post;
     media: Media;
     categories: Category;
+    motoren: Motoren;
     users: User;
     redirects: Redirect;
     forms: Form;
@@ -93,6 +94,7 @@ export interface Config {
     posts: PostsSelect<false> | PostsSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
+    motoren: MotorenSelect<false> | MotorenSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     redirects: RedirectsSelect<false> | RedirectsSelect<true>;
     forms: FormsSelect<false> | FormsSelect<true>;
@@ -231,6 +233,7 @@ export interface Page {
         blockName?: string | null;
         blockType: 'ImageTextBlock';
       }
+    | MotorOverzicht
   )[];
   meta?: {
     title?: string | null;
@@ -812,6 +815,33 @@ export interface Form {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "Motor overzicht".
+ */
+export interface MotorOverzicht {
+  titel: string;
+  tekst?: string | null;
+  motoren: (string | Motoren)[];
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'motorOverview';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "motoren".
+ */
+export interface Motoren {
+  id: string;
+  naam: string;
+  specstekst?: string | null;
+  prijs: number;
+  bodytekst?: string | null;
+  url_marktplaats?: string | null;
+  afbeelding?: (string | null) | Media;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "redirects".
  */
 export interface Redirect {
@@ -1017,6 +1047,10 @@ export interface PayloadLockedDocument {
         value: string | Category;
       } | null)
     | ({
+        relationTo: 'motoren';
+        value: string | Motoren;
+      } | null)
+    | ({
         relationTo: 'users';
         value: string | User;
       } | null)
@@ -1144,6 +1178,7 @@ export interface PagesSelect<T extends boolean = true> {
               id?: T;
               blockName?: T;
             };
+        motorOverview?: T | MotorOverzichtSelect<T>;
       };
   meta?:
     | T
@@ -1242,6 +1277,17 @@ export interface FormBlockSelect<T extends boolean = true> {
   introContent?: T;
   id?: T;
   blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "Motor overzicht_select".
+ */
+export interface MotorOverzichtSelect {
+  titel?: boolean;
+  tekst?: boolean;
+  motoren?: boolean;
+  id?: boolean;
+  blockName?: boolean;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1385,6 +1431,20 @@ export interface CategoriesSelect<T extends boolean = true> {
         label?: T;
         id?: T;
       };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "motoren_select".
+ */
+export interface MotorenSelect<T extends boolean = true> {
+  naam?: T;
+  specstekst?: T;
+  prijs?: T;
+  bodytekst?: T;
+  url_marktplaats?: T;
+  afbeelding?: T;
   updatedAt?: T;
   createdAt?: T;
 }

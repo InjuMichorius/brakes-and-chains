@@ -3,8 +3,8 @@ import { Block } from 'payload'
 export const ImageTextBlock: Block = {
   slug: 'ImageTextBlock',
   labels: {
-    singular: 'Hero Image & Text',
-    plural: 'Hero Image & Texts',
+    singular: 'Image & Text',
+    plural: 'Image & Texts',
   },
   fields: [
     {

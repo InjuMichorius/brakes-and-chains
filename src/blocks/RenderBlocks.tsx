@@ -8,6 +8,7 @@ import { ContentBlock } from '@/blocks/Content/Component'
 import { FormBlock } from '@/blocks/Form/Component'
 import { MediaBlock } from '@/blocks/MediaBlock/Component'
 import { ImageTextBlock } from '@/blocks/ImageTextBlock/Component'
+import { MotorOverview } from '@/blocks/MotorOverview/Component'
 
 import type {
   ArchiveBlock as ArchiveBlockProps,
@@ -37,6 +38,7 @@ const blockComponents: Record<string, BlockComponent> = {
   formBlock: FormBlock,
   mediaBlock: MediaBlock,
   ImageTextBlock: ImageTextBlock,
+  motorOverview: MotorOverview,
 }
 
 export const RenderBlocks: React.FC<{
