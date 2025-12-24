@@ -7,7 +7,7 @@ type Motor = {
   id: string
   naam: string
   prijs: number
-  specsTekst?: string
+  specstekst?: string
   bodytekst?: string
   url_marktplaats?: string
   afbeelding?: {
@@ -16,11 +16,13 @@ type Motor = {
   }
 }
 
+type MotorRef = string | { id: string }
+
 interface Props {
   blockId?: string
   titel: string
   tekst?: string
-  motoren?: string[] // Nu alleen IDs
+  motoren?: MotorRef[]
   className?: string
 }
 
@@ -36,16 +38,25 @@ export const MotorOverview: React.FC<Props> = ({
 
   useEffect(() => {
     const fetchMotoren = async () => {
-      if (!motoren.length) return
+      if (!motoren.length) {
+        setLoading(false)
+        return
+      }
 
       try {
         const fetchedMotoren: Motor[] = await Promise.all(
-          motoren.map(async (id) => {
-            const res = await fetch(`/api/motoren/${id}`) // Pas dit endpoint aan naar je API
-            if (!res.ok) throw new Error(`Kon motor ${id} niet ophalen`)
+          motoren.map(async (motor) => {
+            const id = typeof motor === 'string' ? motor : motor.id
+
+            const res = await fetch(`/api/motoren/${id}`)
+            if (!res.ok) {
+              throw new Error(`Kon motor ${id} niet ophalen`)
+            }
+
             return res.json()
           }),
         )
+
         setMotorDetails(fetchedMotoren)
       } catch (error) {
         console.error(error)
@@ -81,7 +92,7 @@ export const MotorOverview: React.FC<Props> = ({
             <div className="p-4">
               <h3 className="text-xl font-semibold">{motor.naam}</h3>
 
-              {motor.specsTekst && <p className="text-sm text-gray-500 mt-1">{motor.specsTekst}</p>}
+              {motor.specstekst && <p className="text-sm text-gray-500 mt-1">{motor.specstekst}</p>}
 
               {motor.bodytekst && <p className="mt-2 text-sm">{motor.bodytekst}</p>}
 

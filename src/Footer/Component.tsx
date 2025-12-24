@@ -44,7 +44,7 @@ export async function Footer() {
 
           <div className="flex items-center gap-4">
             <a
-              href="#"
+              href="https://www.instagram.com/brakes_and_chains/"
               aria-label="Instagram"
               className="h-10 w-10 rounded-full border border-white/20 flex items-center justify-center hover:border-white transition"
             >
@@ -55,21 +55,21 @@ export async function Footer() {
               </svg>
             </a>
 
-            <a
+            {/* <a
               href="#"
               aria-label="Facebook"
               className="h-10 w-10 rounded-full border border-white/20 flex items-center justify-center hover:border-white transition"
             >
               f
-            </a>
+            </a> */}
 
-            <a
+            {/* <a
               href="#"
               aria-label="YouTube"
               className="h-10 w-10 rounded-full border border-white/20 flex items-center justify-center hover:border-white transition"
             >
               ▶
-            </a>
+            </a> */}
           </div>
         </div>
 
