@@ -2,6 +2,9 @@ import { CollectionConfig } from 'payload'
 
 export const Motoren: CollectionConfig = {
   slug: 'motoren',
+  access: {
+    read: () => true,
+  },
   labels: {
     singular: 'Motor',
     plural: 'Motoren',

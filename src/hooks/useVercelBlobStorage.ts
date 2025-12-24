@@ -1,8 +1,8 @@
-import type { Media } from '@/payload-types'
+import type { Media as MediaType } from '@/payload-types'
 import { uploadToBlob } from '@/utilities/blobStorage'
 
 export const useVercelBlobStorage = () => {
-  const handleUpload = async (file: File): Promise<Partial<Media>> => {
+  const handleUpload = async (file: File): Promise<Partial<MediaType>> => {
     try {
       const url = await uploadToBlob(file)
 
@@ -10,8 +10,8 @@ export const useVercelBlobStorage = () => {
         filename: file.name,
         mimeType: file.type,
         url,
-        width: 0, // These will be updated after upload
-        height: 0,
+        width: undefined,
+        height: undefined,
       }
     } catch (error) {
       console.error('Error uploading to Vercel Blob:', error)
