@@ -5,10 +5,6 @@ export const Motoren: CollectionConfig = {
   access: {
     read: () => true,
   },
-  labels: {
-    singular: 'Motor',
-    plural: 'Motoren',
-  },
   admin: {
     useAsTitle: 'naam',
   },
