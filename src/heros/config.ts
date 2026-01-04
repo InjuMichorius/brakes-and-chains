@@ -26,12 +26,20 @@ export const hero: Field = {
       required: true,
     },
     {
+      name: 'heroTitle',
+      type: 'text',
+      label: 'Hero Title',
+      admin: {
+        placeholder: 'Voer een titel in…',
+      },
+    },
+    {
       name: 'richText',
       type: 'richText',
       editor: lexicalEditor({
         features: ({ rootFeatures }) => [
           ...rootFeatures,
-          HeadingFeature({ enabledHeadingSizes: ['h1', 'h2', 'h3', 'h4'] }),
+          HeadingFeature({ enabledHeadingSizes: ['h2', 'h3', 'h4'] }),
           FixedToolbarFeature(),
           InlineToolbarFeature(),
         ],
@@ -52,7 +60,6 @@ export const hero: Field = {
         condition: (_, { type } = {}) => ['highImpact', 'mediumImpact'].includes(type),
       },
     },
-
     {
       name: 'youtubeUrl',
       label: 'YouTube URL',

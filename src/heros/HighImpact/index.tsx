@@ -21,6 +21,7 @@ export const HighImpactHero: React.FC<HighImpactHeroProps> = ({
   media,
   richText,
   youtubeUrl,
+  heroTitle,
 }) => {
   const { setHeaderTheme } = useHeaderTheme()
 
@@ -85,8 +86,12 @@ export const HighImpactHero: React.FC<HighImpactHeroProps> = ({
       data-theme="dark"
     >
       {/* Content */}
-      <div className="container mb-8 z-10 relative flex items-center justify-start">
+      <div className="container mb-8 z-10 relative flex flex-col items-start">
         <div className="max-w-[32rem]">
+          {heroTitle && (
+            <h1 className="mb-6 text-4xl md:text-5xl font-bold leading-tight">{heroTitle}</h1>
+          )}
+
           {richText && <RichText className="mb-16" data={richText} enableGutter={false} />}
 
           {Array.isArray(links) && links.length > 0 && (

@@ -46,10 +46,10 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data }) => {
   return (
     <header className="container relative z-20" {...(theme ? { 'data-theme': theme } : {})}>
       <div
-        className={`fixed py-6 px-4 flex justify-between w-full left-0 top-0 transition-colors duration-300`}
+        className={`fixed py-6 px-4 flex justify-between w-full left-0 top-0 transition-colors duration-700`}
       >
         <div
-          className={`absolute inset-0 bg-black transform transition-transform duration-300 ease-out ${scrolled ? 'translate-y-0' : '-translate-y-full'}`}
+          className={`absolute inset-0 bg-black transform transition-transform duration-700 ease-out ${scrolled ? 'translate-y-0' : '-translate-y-full'}`}
         />
         <Link href="/">
           <Logo loading="eager" priority="high" className="invert dark:invert-0" />
