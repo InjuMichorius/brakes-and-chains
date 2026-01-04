@@ -12,7 +12,6 @@ const isPopulatedMedia = (media: unknown): media is MediaType => {
   return typeof media === 'object' && media !== null && 'url' in media
 }
 
-// 👉 optioneel: youtubeUrl toevoegen aan hero
 type HighImpactHeroProps = Page['hero'] & {
   youtubeUrl?: string | null
 }
@@ -25,16 +24,35 @@ export const HighImpactHero: React.FC<HighImpactHeroProps> = ({
 }) => {
   const { setHeaderTheme } = useHeaderTheme()
 
+  const heroRef = useRef<HTMLDivElement | null>(null)
   const videoRef = useRef<HTMLVideoElement | null>(null)
+
   const [isPlaying, setIsPlaying] = useState(true)
+  const [isShrunk, setIsShrunk] = useState(false)
 
   useEffect(() => {
     setHeaderTheme('dark')
   }, [setHeaderTheme])
 
-  if (!isPopulatedMedia(media)) {
-    return null
-  }
+  useEffect(() => {
+    if (!heroRef.current) return
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        const top = entry.boundingClientRect.top
+        setIsShrunk(top < -100)
+      },
+      {
+        threshold: Array.from({ length: 50 }, (_, i) => i / 50),
+      },
+    )
+
+    observer.observe(heroRef.current)
+
+    return () => observer.disconnect()
+  }, [])
+
+  if (!isPopulatedMedia(media)) return null
 
   const isVideo = media.mimeType?.startsWith('video/')
   const mediaUrl = media.url ?? undefined
@@ -53,7 +71,17 @@ export const HighImpactHero: React.FC<HighImpactHeroProps> = ({
 
   return (
     <div
-      className="relative -mt-[10.4rem] flex items-center justify-center text-white pt-8 min-h-[90vh] md:min-h-[80vh]"
+      ref={heroRef}
+      className={`
+        relative -mt-[10.4rem] flex items-center justify-center text-white pt-8
+        min-h-[90vh] md:min-h-[80vh] overflow-hidden
+        transition-[margin,border-radius,transform] duration-700 ease-in-out
+        ${
+          isShrunk
+            ? 'mx-[1rem] md:mx-[2rem] md:mx-[3rem] rounded-xl sm:rounded-2xl md:rounded-3xl translate-y-[-10px]'
+            : 'mx-0 rounded-none translate-y-0'
+        }
+                              `}
       data-theme="dark"
     >
       {/* Content */}
@@ -92,17 +120,14 @@ export const HighImpactHero: React.FC<HighImpactHeroProps> = ({
 
       {/* Controls */}
       {isVideo && (
-        <div className="absolute bottom-6 right-6 z-20 flex gap-3">
-          {/* Desktop: play / pause */}
+        <div className="absolute bottom-6 right-6 z-10 flex gap-3">
           <button
             onClick={toggleVideo}
             className="hidden md:inline-flex items-center rounded-full bg-black/60 px-4 py-2 text-sm text-white hover:bg-black/80 transition"
-            aria-label={isPlaying ? 'Pauzeer video' : 'Speel video af'}
           >
             {isPlaying ? 'Pauzeer video' : 'Speel video af'}
           </button>
 
-          {/* Mobile: YouTube */}
           {youtubeUrl && (
             <a
               href={youtubeUrl}
