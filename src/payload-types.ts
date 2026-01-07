@@ -216,7 +216,6 @@ export interface Page {
     | {
         blockId?: string | null;
         image: string | Media;
-        preTitle?: string | null;
         title: string;
         description?: string | null;
         features?:
@@ -1166,7 +1165,6 @@ export interface PagesSelect<T extends boolean = true> {
           | {
               blockId?: T;
               image?: T;
-              preTitle?: T;
               title?: T;
               description?: T;
               features?:

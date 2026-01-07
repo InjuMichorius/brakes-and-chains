@@ -18,11 +18,6 @@ export const ImageTextBlock: Block = {
       required: true,
     },
     {
-      name: 'preTitle',
-      type: 'text',
-      label: 'Pre-title',
-    },
-    {
       name: 'title',
       type: 'text',
       required: true,
