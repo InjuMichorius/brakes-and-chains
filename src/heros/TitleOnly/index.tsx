@@ -6,6 +6,7 @@ import { motion } from 'framer-motion'
 import type { Page, Media as MediaType } from '@/payload-types'
 
 import { Media } from '@/components/Media'
+import { CircleCta } from '@/components/CircleCta'
 
 const isPopulatedMedia = (media: unknown): media is MediaType => {
   return typeof media === 'object' && media !== null && 'url' in media
@@ -67,7 +68,7 @@ export const TitleOnlyHero: React.FC<TitleOnlyHeroProps> = ({ media, youtubeUrl,
       {/* Content */}
       <div className="z-10 absolute bottom-0 left-0 w-full">
         <motion.div
-          className="flex gap-10 flex-row-reverse flex-wrap justify-end container mx-auto py-8 md:py-16"
+          className="flex gap-4 md:gap-10 flex-row-reverse flex-wrap justify-end container mx-auto py-8 md:py-16 items-center"
           initial={{ y: 100, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{
@@ -75,16 +76,7 @@ export const TitleOnlyHero: React.FC<TitleOnlyHeroProps> = ({ media, youtubeUrl,
             ease: 'easeOut',
           }}
         >
-          {youtubeUrl && (
-            <a
-              href={youtubeUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center rounded-full bg-red-600 px-4 py-2 text-sm font-medium text-white hover:bg-red-700 transition"
-            >
-              Bekijk op YouTube
-            </a>
-          )}
+          {youtubeUrl && <CircleCta href={youtubeUrl} />}
 
           <div className="max-w-[21rem] sm:max-w-[26rem] md:max-w-[40rem] xl:max-w-[55rem]">
             {heroTitle && (
