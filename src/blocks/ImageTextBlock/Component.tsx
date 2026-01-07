@@ -3,9 +3,8 @@ import React from 'react'
 import Image from 'next/image'
 import { cn } from '@/utilities/ui'
 import { Check } from 'lucide-react'
-import { motion } from 'framer-motion'
+import { motion, easeInOut } from 'framer-motion'
 import { ScrollParagraphAnimation } from '../../components/ScrollParagraphAnimation'
-import { easeInOut } from 'framer-motion'
 
 interface Feature {
   id?: string | number
@@ -30,7 +29,6 @@ interface ImageTextBlockProps {
   className?: string
 }
 
-// Single item animation configuration
 const fadeInUp = {
   hidden: { opacity: 0, y: 30 },
   visible: {
@@ -54,24 +52,20 @@ export const ImageTextBlock: React.FC<ImageTextBlockProps> = ({
 
   return (
     <section id={blockId || undefined} className={cn('container mx-auto scroll-mt-24', className)}>
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-16 items-center">
+      {/* Added items-center to prevent children stretching vertically */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-16 items-center">
         {/* TEXT CONTENT */}
-        <div
-          className={cn(
-            'flex flex-col gap-6 max-w-xl',
-            reverseLayout ? 'lg:order-2' : 'lg:order-1',
-          )}
-        >
+        <div className={cn('flex flex-col max-w-xl', reverseLayout ? 'lg:order-2' : 'lg:order-1')}>
           {title && (
-            <motion.h1
+            <motion.h2
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true, margin: '-50px' }}
               variants={fadeInUp}
-              className="text-4xl lg:text-5xl font-bold leading-tight"
+              className="text-4xl lg:text-5xl font-bold leading-6 mb-4"
             >
               {title}
-            </motion.h1>
+            </motion.h2>
           )}
 
           {description && (
@@ -89,14 +83,26 @@ export const ImageTextBlock: React.FC<ImageTextBlockProps> = ({
           )}
 
           {features && features.length > 0 && (
-            <ul className="flex flex-col gap-3 pt-2">
+            <ul className="flex flex-col gap-3 py-4">
               {features.map((feature, idx) => (
                 <motion.li
                   key={idx}
                   initial="hidden"
                   whileInView="visible"
                   viewport={{ once: true, margin: '-20px' }}
-                  variants={fadeInUp}
+                  // Custom variant to handle the staggering
+                  variants={{
+                    hidden: { opacity: 0, y: 20 },
+                    visible: {
+                      opacity: 1,
+                      y: 0,
+                      transition: {
+                        delay: idx * 0.15, // Staggers each checkmark
+                        duration: 0.5,
+                        ease: easeInOut,
+                      },
+                    },
+                  }}
                   className="flex items-center gap-3 text-gray-700"
                 >
                   <span className="flex h-6 w-6 items-center justify-center rounded-full bg-blue-100 text-blue-600">
@@ -142,7 +148,8 @@ export const ImageTextBlock: React.FC<ImageTextBlockProps> = ({
             viewport={{ once: true, margin: '-100px' }}
             variants={fadeInUp}
             className={cn(
-              'relative w-full h-[420px] lg:h-[520px]',
+              // Added overflow-hidden and rounded corners
+              'relative w-full h-[420px] lg:h-[520px] overflow-hidden rounded-2xl md:rounded-3xl shadow-xl',
               reverseLayout ? 'lg:order-1' : 'lg:order-2',
             )}
           >
@@ -150,7 +157,8 @@ export const ImageTextBlock: React.FC<ImageTextBlockProps> = ({
               src={imageUrl}
               alt={title || ''}
               fill
-              className="object-contain"
+              // Using object-cover to ensure the image fills the rounded container
+              className="object-cover"
               sizes="(max-width: 1024px) 100vw, 50vw"
               priority
             />

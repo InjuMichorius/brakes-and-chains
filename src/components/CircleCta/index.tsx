@@ -60,7 +60,7 @@ export const CircleCta: React.FC<CircleCtaButtonProps> = ({
         </svg>
       </motion.div>
 
-      <div className="relative flex items-center justify-center w-14 h-14 bg-white text-black rounded-full transition-all duration-300 group-hover:scale-110 shadow-xl group-hover:bg-red-600 group-hover:text-white">
+      <div className="relative flex items-center justify-center w-10 h-10 md:w-14 md:h-14 bg-white text-black rounded-full transition-all duration-300 group-hover:scale-110 group-hover:bg-red-600 group-hover:text-white">
         <Play size={20} fill="currentColor" className="ml-1" />
       </div>
     </Link>
