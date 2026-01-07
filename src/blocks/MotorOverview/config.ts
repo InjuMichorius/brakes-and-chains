@@ -13,11 +13,6 @@ export const MotorOverview: Block = {
       type: 'text',
     },
     {
-      name: 'preTitle',
-      type: 'text',
-      label: 'Pre-title',
-    },
-    {
       name: 'titel',
       type: 'text',
       required: true,

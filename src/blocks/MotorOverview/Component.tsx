@@ -20,25 +20,14 @@ interface Props {
   tekst?: string
   motoren: Motor[]
   className?: string
-  preTitle?: string
 }
 
-export const MotorOverview: React.FC<Props> = ({
-  blockId,
-  titel,
-  tekst,
-  motoren,
-  className,
-  preTitle,
-}) => {
+export const MotorOverview: React.FC<Props> = ({ blockId, titel, tekst, motoren, className }) => {
   if (!motoren?.length) return null
 
   return (
-    <section id={blockId} className={cn('container mx-auto py-16 px-4', className)}>
+    <section id={blockId} className={cn('container mx-auto px-4', className)}>
       <div className="mb-12">
-        {preTitle && (
-          <span className="inline-block text-sm font-medium text-gray-500">{preTitle}</span>
-        )}
         <h2 className="text-4xl font-bold mb-4 uppercase tracking-tight">{titel}</h2>
         {tekst && <p className="text-lg text-gray-600 max-w-2xl">{tekst}</p>}
       </div>

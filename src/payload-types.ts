@@ -823,7 +823,6 @@ export interface Form {
  */
 export interface MotorOverview {
   blockId?: string | null;
-  preTitle?: string | null;
   titel: string;
   tekst?: string | null;
   motoren: (string | Motoren)[];
@@ -1291,7 +1290,6 @@ export interface FormBlockSelect<T extends boolean = true> {
  */
 export interface MotorOverviewSelect<T extends boolean = true> {
   blockId?: T;
-  preTitle?: T;
   titel?: T;
   tekst?: T;
   motoren?: T;
