@@ -80,7 +80,7 @@ export const TitleOnlyHero: React.FC<TitleOnlyHeroProps> = ({ media, youtubeUrl,
 
           <div className="max-w-[21rem] sm:max-w-[26rem] md:max-w-[40rem] xl:max-w-[55rem]">
             {heroTitle && (
-              <h1 className="text-[1.6rem] sm:text-[2rem] md:text-[3rem] xl:text-[4rem] font-bold leading-tight uppercase">
+              <h1 className="text-[1.6rem] sm:text-[2rem] md:text-[3rem] xl:text-[4rem] font-bold uppercase">
                 {heroTitle}
               </h1>
             )}

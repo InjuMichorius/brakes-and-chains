@@ -62,7 +62,7 @@ export const ImageTextBlock: React.FC<ImageTextBlockProps> = ({
               whileInView="visible"
               viewport={{ once: true, margin: '-50px' }}
               variants={fadeInUp}
-              className="text-4xl lg:text-5xl font-bold leading-6 mb-4"
+              className="text-4xl lg:text-5xl font-bold leading-16 mb-4"
             >
               {title}
             </motion.h2>

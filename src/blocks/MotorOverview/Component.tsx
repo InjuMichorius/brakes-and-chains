@@ -46,7 +46,7 @@ export const MotorOverview: React.FC<Props> = ({ blockId, titel, tekst, motoren,
             whileInView="visible"
             viewport={{ once: true, margin: '-50px' }}
             variants={fadeInUp}
-            className="text-4xl lg:text-5xl font-bold mb-4 leading-6"
+            className="text-4xl lg:text-5xl font-bold mb-4 leading-16"
           >
             {titel}
           </motion.h2>
