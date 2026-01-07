@@ -1,6 +1,7 @@
 'use client'
 import { useHeaderTheme } from '@/providers/HeaderTheme'
 import React, { useEffect, useRef, useState } from 'react'
+import { motion } from 'framer-motion'
 
 import type { Page, Media as MediaType } from '@/payload-types'
 
@@ -64,25 +65,35 @@ export const TitleOnlyHero: React.FC<TitleOnlyHeroProps> = ({ media, youtubeUrl,
       data-theme="dark"
     >
       {/* Content */}
-      <div
-        className="z-10 absolute bottom-10 left-10 flex gap-10 flex-row-reverse flex-wrap justify-end
-"
-      >
-        {youtubeUrl && (
-          <a
-            href={youtubeUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center rounded-full bg-red-600 px-4 py-2 text-sm font-medium text-white hover:bg-red-700 transition"
-          >
-            Bekijk op YouTube
-          </a>
-        )}
-        <div className="max-w-[55rem]">
-          {heroTitle && (
-            <h1 className="mb-6 text-[4rem] font-bold leading-tight uppercase">{heroTitle}</h1>
+      <div className="z-10 absolute bottom-0 left-0 w-full">
+        <motion.div
+          className="flex gap-10 flex-row-reverse flex-wrap justify-end container mx-auto py-8 md:py-16"
+          initial={{ y: 100, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{
+            duration: 0.6,
+            ease: 'easeOut',
+          }}
+        >
+          {youtubeUrl && (
+            <a
+              href={youtubeUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center rounded-full bg-red-600 px-4 py-2 text-sm font-medium text-white hover:bg-red-700 transition"
+            >
+              Bekijk op YouTube
+            </a>
           )}
-        </div>
+
+          <div className="max-w-[21rem] sm:max-w-[26rem] md:max-w-[40rem] xl:max-w-[55rem]">
+            {heroTitle && (
+              <h1 className="text-[1.6rem] sm:text-[2rem] md:text-[3rem] xl:text-[4rem] font-bold leading-tight uppercase">
+                {heroTitle}
+              </h1>
+            )}
+          </div>
+        </motion.div>
       </div>
 
       {/* Background Media */}
