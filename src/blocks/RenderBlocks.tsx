@@ -59,7 +59,7 @@ export const RenderBlocks: React.FC<{
 
             if (Block) {
               return (
-                <div className="my-16" key={index}>
+                <div className="md:my-16" key={index}>
                   <Block {...block} disableInnerContainer />
                 </div>
               )

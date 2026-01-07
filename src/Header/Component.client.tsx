@@ -3,6 +3,7 @@ import { useHeaderTheme } from '@/providers/HeaderTheme'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
+import { motion } from 'framer-motion' // Added motion
 
 import type { Header } from '@/payload-types'
 
@@ -17,43 +18,51 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data }) => {
   const [theme, setTheme] = useState<string | null>(null)
   const { headerTheme, setHeaderTheme } = useHeaderTheme()
   const pathname = usePathname()
-
-  // New state to track if the page is scrolled
   const [scrolled, setScrolled] = useState(false)
 
-  // Reset theme on pathname change
   useEffect(() => {
     setHeaderTheme(null)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pathname])
+  }, [pathname, setHeaderTheme])
 
-  // Update theme when headerTheme changes
   useEffect(() => {
     if (headerTheme && headerTheme !== theme) setTheme(headerTheme)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [headerTheme])
+  }, [headerTheme, theme])
 
-  // Listen to scroll
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 0) // true if not at top
+      setScrolled(window.scrollY > 0)
     }
     window.addEventListener('scroll', handleScroll)
-    handleScroll() // initialize on mount
+    handleScroll()
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
   return (
     <header className="container relative z-20" {...(theme ? { 'data-theme': theme } : {})}>
-      <div
-        className={`fixed py-6 px-4 flex justify-between w-full left-0 top-0 transition-colors duration-700`}
-      >
-        <div
-          className={`absolute inset-0 bg-black transform transition-transform duration-700 ease-out ${scrolled ? 'translate-y-0' : '-translate-y-full'}`}
+      <div className="fixed py-6 px-4 flex justify-between w-full left-0 top-0 overflow-hidden">
+        {/* Animated Background Overlay */}
+        <motion.div
+          initial={{ y: '-100%' }}
+          animate={{ y: scrolled ? '0%' : '-100%' }}
+          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+          className="absolute inset-0 bg-black -z-10"
         />
-        <Link href="/">
-          <Logo loading="eager" priority="high" className="invert dark:invert-0" />
-        </Link>
+
+        {/* LOGO ANIMATION */}
+        <motion.div
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{
+            duration: 0.8,
+            delay: 0.1, // Logo appears first
+            ease: [0.22, 1, 0.36, 1],
+          }}
+        >
+          <Link href="/">
+            <Logo loading="eager" priority="high" className="invert dark:invert-0" />
+          </Link>
+        </motion.div>
+
         <HeaderNav data={data} />
       </div>
     </header>

@@ -22,6 +22,7 @@ export const hero: Field = {
         { label: 'High Impact', value: 'highImpact' },
         { label: 'Medium Impact', value: 'mediumImpact' },
         { label: 'Low Impact', value: 'lowImpact' },
+        { label: 'Title Only', value: 'titleOnly' },
       ],
       required: true,
     },
@@ -31,6 +32,11 @@ export const hero: Field = {
       label: 'Hero Title',
       admin: {
         placeholder: 'Voer een titel in…',
+        condition: (_, { type } = {}) =>
+          type === 'titleOnly' ||
+          type === 'highImpact' ||
+          type === 'mediumImpact' ||
+          type === 'lowImpact',
       },
     },
     {
@@ -45,10 +51,16 @@ export const hero: Field = {
         ],
       }),
       label: false,
+      admin: {
+        condition: (_, { type } = {}) => type !== 'titleOnly',
+      },
     },
     linkGroup({
       overrides: {
         maxRows: 2,
+        admin: {
+          condition: (_, { type } = {}) => type !== 'titleOnly',
+        },
       },
     }),
     {
@@ -57,7 +69,7 @@ export const hero: Field = {
       relationTo: 'media',
       required: false,
       admin: {
-        condition: (_, { type } = {}) => ['highImpact', 'mediumImpact'].includes(type),
+        condition: (_, { type } = {}) => ['highImpact', 'mediumImpact', 'titleOnly'].includes(type),
       },
     },
     {
@@ -67,7 +79,7 @@ export const hero: Field = {
       admin: {
         placeholder: 'https://www.youtube.com/watch?v=…',
         description: 'Wordt gebruikt als fallback op mobiel bij video heroes',
-        condition: (_, { type } = {}) => type === 'highImpact',
+        condition: (_, { type } = {}) => type === 'highImpact' || type === 'titleOnly',
       },
       validate: (value: unknown) => {
         if (!value) return true

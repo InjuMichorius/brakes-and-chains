@@ -64,7 +64,7 @@ export const ImageTextBlock: React.FC<ImageTextBlockProps> = ({
   return (
     <section
       id={blockId || undefined}
-      className={cn('container mx-auto scroll-mt-24 py-20', className)}
+      className={cn('container mx-auto scroll-mt-24 py-12 md:py-20', className)}
     >
       <motion.div
         variants={containerVariants}

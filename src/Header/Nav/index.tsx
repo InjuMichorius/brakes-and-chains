@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react'
 import type { Header as HeaderType } from '@/payload-types'
 import { CMSLink } from '@/components/Link'
 import { Menu, X } from 'lucide-react'
+import { motion, AnimatePresence, easeOut } from 'framer-motion'
 
 export const HeaderNav: React.FC<{ data: HeaderType }> = ({ data }) => {
   const navItems = data?.navItems || []
@@ -14,17 +15,44 @@ export const HeaderNav: React.FC<{ data: HeaderType }> = ({ data }) => {
     document.body.style.overflow = open ? 'hidden' : ''
   }, [open])
 
+  // Variants for the staggered entrance
+  const navContainerVariants = {
+    hidden: { opacity: 0, y: -20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        staggerChildren: 0.1,
+        delayChildren: 0.2,
+        duration: 0.5,
+        ease: easeOut,
+      },
+    },
+  }
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: -10 },
+    visible: { opacity: 1, y: 0 },
+  }
+
   return (
     <>
       {/* DESKTOP NAV */}
-      <nav className="hidden md:flex gap-12 items-center">
+      <motion.nav
+        variants={navContainerVariants}
+        initial="hidden"
+        animate="visible"
+        className="hidden md:flex gap-12 items-center"
+      >
         {navItems.map(({ link }, i) => (
-          <CMSLink key={i} {...link} appearance="link" />
+          <motion.div key={i} variants={itemVariants}>
+            <CMSLink {...link} appearance="link" />
+          </motion.div>
         ))}
-      </nav>
+      </motion.nav>
 
       {/* MOBILE */}
-      <div className="md:hidden relative z-50">
+      <div className="md:hidden relative z-60">
         {/* Hamburger / Cross Button */}
         <button
           onClick={() => setOpen(!open)}
@@ -46,40 +74,51 @@ export const HeaderNav: React.FC<{ data: HeaderType }> = ({ data }) => {
           />
         </button>
 
-        {/* BACKDROP */}
-        <div
-          onClick={() => setOpen(false)}
-          className={`fixed inset-0 bg-black/60 transition-opacity duration-500 ${
-            open ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
-          }`}
-        />
+        {/* MOBILE OVERLAY (using AnimatePresence for smooth exit) */}
+        <AnimatePresence>
+          {open && (
+            <>
+              {/* BACKDROP */}
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                onClick={() => setOpen(false)}
+                className="fixed inset-0 bg-black/60 z-10"
+              />
 
-        {/* SLIDE-IN MENU */}
-        <aside
-          className={`fixed top-0 right-0 h-full w-1/2 max-w-sm bg-black border-l border-white/10
-            transform transition-transform duration-500 ease-in-out
-            ${open ? 'translate-x-0' : 'translate-x-full'}
-          `}
-        >
-          {/* Nav items */}
-          <nav className="flex flex-col gap-8 px-8 pt-12 text-xl">
-            {navItems.map(({ link }, i) => (
-              <div
-                key={i}
-                className="cursor-pointer"
-                onClick={() => {
-                  setOpen(false)
-                  if (link.url?.startsWith('#')) {
-                    const target = document.querySelector(link.url)
-                    target?.scrollIntoView({ behavior: 'smooth' })
-                  }
-                }}
+              {/* SLIDE-IN MENU */}
+              <motion.aside
+                initial={{ x: '100%' }}
+                animate={{ x: 0 }}
+                exit={{ x: '100%' }}
+                transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+                className="fixed top-0 right-0 h-full w-2/3 max-w-sm bg-black border-l border-white/10 z-30"
               >
-                <CMSLink {...link} appearance="link" className="text-white" />
-              </div>
-            ))}
-          </nav>
-        </aside>
+                <nav className="flex flex-col gap-8 px-8 pt-24 text-xl">
+                  {navItems.map(({ link }, i) => (
+                    <motion.div
+                      key={i}
+                      initial={{ opacity: 0, x: 20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 0.1 * i }}
+                      className="cursor-pointer"
+                      onClick={() => {
+                        setOpen(false)
+                        if (link.url?.startsWith('#')) {
+                          const target = document.querySelector(link.url)
+                          target?.scrollIntoView({ behavior: 'smooth' })
+                        }
+                      }}
+                    >
+                      <CMSLink {...link} appearance="link" className="text-white" />
+                    </motion.div>
+                  ))}
+                </nav>
+              </motion.aside>
+            </>
+          )}
+        </AnimatePresence>
       </div>
     </>
   )

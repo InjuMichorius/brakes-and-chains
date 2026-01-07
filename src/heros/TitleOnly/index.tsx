@@ -4,25 +4,17 @@ import React, { useEffect, useRef, useState } from 'react'
 
 import type { Page, Media as MediaType } from '@/payload-types'
 
-import { CMSLink } from '@/components/Link'
 import { Media } from '@/components/Media'
-import RichText from '@/components/RichText'
 
 const isPopulatedMedia = (media: unknown): media is MediaType => {
   return typeof media === 'object' && media !== null && 'url' in media
 }
 
-type HighImpactHeroProps = Page['hero'] & {
+type TitleOnlyHeroProps = Page['hero'] & {
   youtubeUrl?: string | null
 }
 
-export const HighImpactHero: React.FC<HighImpactHeroProps> = ({
-  links,
-  media,
-  richText,
-  youtubeUrl,
-  heroTitle,
-}) => {
+export const TitleOnlyHero: React.FC<TitleOnlyHeroProps> = ({ media, youtubeUrl, heroTitle }) => {
   const { setHeaderTheme } = useHeaderTheme()
 
   const heroRef = useRef<HTMLDivElement | null>(null)
@@ -72,22 +64,23 @@ export const HighImpactHero: React.FC<HighImpactHeroProps> = ({
       data-theme="dark"
     >
       {/* Content */}
-      <div className="container mb-8 z-10 relative flex flex-col items-start">
-        <div className="max-w-[32rem]">
+      <div
+        className="z-10 absolute bottom-10 left-10 flex gap-10 flex-row-reverse flex-wrap justify-end
+"
+      >
+        {youtubeUrl && (
+          <a
+            href={youtubeUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center rounded-full bg-red-600 px-4 py-2 text-sm font-medium text-white hover:bg-red-700 transition"
+          >
+            Bekijk op YouTube
+          </a>
+        )}
+        <div className="max-w-[55rem]">
           {heroTitle && (
-            <h1 className="mb-6 text-4xl md:text-5xl font-bold leading-tight">{heroTitle}</h1>
-          )}
-
-          {richText && <RichText className="mb-16" data={richText} enableGutter={false} />}
-
-          {Array.isArray(links) && links.length > 0 && (
-            <ul className="flex md:justify-start gap-4">
-              {links.map(({ link }, i) => (
-                <li key={i}>
-                  <CMSLink {...link} />
-                </li>
-              ))}
-            </ul>
+            <h1 className="mb-6 text-[4rem] font-bold leading-tight uppercase">{heroTitle}</h1>
           )}
         </div>
       </div>
@@ -108,17 +101,6 @@ export const HighImpactHero: React.FC<HighImpactHeroProps> = ({
         ) : (
           <Media fill priority imgClassName="absolute inset-0 object-cover" resource={media} />
         ))}
-
-      {youtubeUrl && (
-        <a
-          href={youtubeUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center rounded-full bg-red-600 px-4 py-2 text-sm font-medium text-white hover:bg-red-700 transition"
-        >
-          Bekijk op YouTube
-        </a>
-      )}
 
       {/* Overlay */}
       <div className="absolute inset-0 bg-black/60 pointer-events-none" />
