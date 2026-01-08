@@ -51,7 +51,10 @@ export const ImageTextBlock: React.FC<ImageTextBlockProps> = ({
   const imageUrl = typeof image === 'string' ? image : image?.url
 
   return (
-    <section id={blockId || undefined} className={cn('container mx-auto scroll-mt-24', className)}>
+    <section
+      id={blockId || undefined}
+      className={cn('container mx-auto scroll-mt-24 py-10 md:py-12', className)}
+    >
       {/* Added items-center to prevent children stretching vertically */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-16 items-center">
         {/* TEXT CONTENT */}
@@ -127,7 +130,7 @@ export const ImageTextBlock: React.FC<ImageTextBlockProps> = ({
                   key={btn.label}
                   href={btn.url}
                   className={cn(
-                    'inline-flex items-center justify-center rounded-full px-6 py-3 font-medium transition',
+                    'inline-flex items-center justify-center rounded-full px-6 py-3 font-medium transition font-bold',
                     btn.variant === 'secondary'
                       ? 'border border-gray-300 text-gray-800 hover:bg-gray-100'
                       : 'bg-black text-white hover:bg-gray-800',
@@ -149,7 +152,7 @@ export const ImageTextBlock: React.FC<ImageTextBlockProps> = ({
             variants={fadeInUp}
             className={cn(
               // Added overflow-hidden and rounded corners
-              'relative w-full h-[420px] lg:h-[520px] overflow-hidden rounded-2xl md:rounded-3xl shadow-xl',
+              'relative w-full h-[420px] lg:h-[520px] overflow-hidden rounded-2xl md:rounded-3xl',
               reverseLayout ? 'lg:order-1' : 'lg:order-2',
             )}
           >

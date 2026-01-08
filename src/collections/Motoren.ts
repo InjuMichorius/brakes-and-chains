@@ -24,6 +24,21 @@ export const Motoren: CollectionConfig = {
       required: true,
     },
     {
+      name: 'bouwjaar',
+      type: 'number',
+      required: true,
+    },
+    {
+      name: 'kilometerstand',
+      type: 'number',
+      required: true,
+    },
+    {
+      name: 'vermogen',
+      type: 'text',
+      required: true,
+    },
+    {
       name: 'bodytekst',
       type: 'textarea',
     },

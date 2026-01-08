@@ -839,6 +839,9 @@ export interface Motoren {
   naam: string;
   specstekst?: string | null;
   prijs: number;
+  bouwjaar: number;
+  kilometerstand: number;
+  vermogen: string;
   bodytekst?: string | null;
   url_marktplaats?: string | null;
   afbeelding?: (string | null) | Media;
@@ -1449,6 +1452,9 @@ export interface MotorenSelect<T extends boolean = true> {
   naam?: T;
   specstekst?: T;
   prijs?: T;
+  bouwjaar?: T;
+  kilometerstand?: T;
+  vermogen?: T;
   bodytekst?: T;
   url_marktplaats?: T;
   afbeelding?: T;

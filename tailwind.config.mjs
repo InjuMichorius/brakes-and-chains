@@ -92,6 +92,7 @@ const config = {
         success: 'hsl(var(--success))',
         error: 'hsl(var(--error))',
         warning: 'hsl(var(--warning))',
+        beige: '#D3BF96',
       },
       fontFamily: {
         anton: ['var(--font-anton)'],
