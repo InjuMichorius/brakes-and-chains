@@ -38,14 +38,14 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data }) => {
   }, [])
 
   return (
-    <header className="container relative z-20" {...(theme ? { 'data-theme': theme } : {})}>
+    <header className="container relative z-40" {...(theme ? { 'data-theme': theme } : {})}>
       <div className="fixed py-6 px-4 flex justify-between w-full left-0 top-0 overflow-hidden">
         {/* Animated Background Overlay */}
         <motion.div
           initial={{ y: '-100%' }}
           animate={{ y: scrolled ? '0%' : '-100%' }}
           transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-          className="absolute inset-0 bg-black -z-10"
+          className="absolute inset-0 bg-black"
         />
 
         {/* LOGO ANIMATION */}

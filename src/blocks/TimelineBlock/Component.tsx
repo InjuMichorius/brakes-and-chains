@@ -20,11 +20,8 @@ export const TimelineBlock: React.FC<Props> = ({ items, className }) => {
     offset: ['start 80%', 'end 20%'],
   })
 
-  const scaleY = useSpring(scrollYProgress, {
-    stiffness: 100,
-    damping: 30,
-    restDelta: 0.001,
-  })
+  // Use scrollYProgress directly for instant line growth
+  const scaleY = scrollYProgress
 
   return (
     <div ref={containerRef} className={cn('py-12 bg-white overflow-hidden', className)}>
@@ -38,6 +35,7 @@ export const TimelineBlock: React.FC<Props> = ({ items, className }) => {
             <motion.div
               style={{ scaleY, originY: 0 }}
               className="absolute left-[8px] md:left-[160px] top-0 w-[2px] h-full bg-orange-500 z-0"
+              transition={{ duration: 0 }}
             />
 
             {items?.map((item, i) => (
@@ -76,21 +74,30 @@ const TimelineItem = ({
    * Adding a slight buffer (0.01) ensures the icon turns orange exactly
    * when the tip of the line reaches the center of the icon.
    */
-  const offset = 0.03
-  const startTrigger = index / total
+  // Responsive offset for mobile/desktop to match the line visually hitting the flag
+  const [offset, setOffset] = React.useState(-0.04)
+  React.useEffect(() => {
+    const updateOffset = () => {
+      setOffset(window.innerWidth < 768 ? -0.13 : -0.04)
+    }
+    updateOffset()
+    window.addEventListener('resize', updateOffset)
+    return () => window.removeEventListener('resize', updateOffset)
+  }, [])
+  const startTrigger = index / total + offset
 
-  // Instantly switch color when progress passes the trigger
+  // Instantly switch color when the line meets the flag (no transition, no opacity)
   const iconColor = useTransform(
     progress,
-    [0, startTrigger - offset, startTrigger, 1],
+    [0, startTrigger, startTrigger + 0.0001, 1],
     ['#d1d5db', '#d1d5db', '#f97316', '#f97316'],
   )
   const borderColor = useTransform(
     progress,
-    [0, startTrigger - offset, startTrigger, 1],
+    [0, startTrigger, startTrigger + 0.0001, 1],
     ['#e5e7eb', '#e5e7eb', '#f97316', '#f97316'],
   )
-  const iconScale = useTransform(progress, [0, 1], [1, 1])
+  const iconScale = 1
 
   return (
     <motion.li
