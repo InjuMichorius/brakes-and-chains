@@ -67,7 +67,7 @@ export const MotorCard: React.FC<MotorCardProps> = ({ motor }) => {
         )}
 
         {/* Title Animation: Reveal from bottom within the image */}
-        <div className="absolute bottom-6 left-6 right-6 overflow-hidden">
+        <div className="absolute bottom-4 left-6 right-6 overflow-hidden">
           <motion.h2
             variants={{
               hidden: { y: 50, opacity: 0 },
