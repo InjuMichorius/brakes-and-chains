@@ -24,7 +24,7 @@ export const TimelineBlock: Block = {
         },
         {
           name: 'content',
-          type: 'richText',
+          type: 'textarea',
           label: 'Item Content',
           required: true,
         },

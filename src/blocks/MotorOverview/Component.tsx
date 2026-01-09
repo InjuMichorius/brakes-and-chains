@@ -52,7 +52,7 @@ export const MotorOverview: React.FC<Props> = ({ blockId, titel, tekst, motoren,
   if (!motoren?.length) return null
 
   return (
-    <section id={blockId} className={cn('bg-beige py-10 md:py-20 scroll-mt-20', className)}>
+    <section id={blockId} className={cn('bg-beige py-20 scroll-mt-20', className)}>
       <div className="mb-12 container">
         {titel && (
           <motion.h2

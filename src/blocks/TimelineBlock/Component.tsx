@@ -3,7 +3,8 @@
 import { cn } from '@/utilities/ui'
 import React, { useRef } from 'react'
 import RichText from '@/components/RichText'
-import { FlagTriangleRight, Flag } from 'lucide-react'
+import { FlagTriangleRight, Flag, Scroll } from 'lucide-react'
+import { ScrollParagraphAnimation } from '@/components/ScrollParagraphAnimation'
 import type { TimelineBlock as TimelineBlockProps } from '@/payload-types'
 import { ImageSlider } from './components/ImageSlider'
 import { motion, useScroll, useSpring, useInView } from 'framer-motion'
@@ -51,8 +52,13 @@ export const TimelineBlock: React.FC<Props> = ({ items, className }) => {
   )
 }
 
-// Separate component for internal items to handle individual "InView" animations
-const TimelineItem = ({ item, isLast }: { item: any; isLast: boolean }) => {
+const TimelineItem = ({
+  item,
+  isLast,
+}: {
+  item: NonNullable<NonNullable<TimelineBlockProps['items']>[number]>
+  isLast: boolean
+}) => {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, margin: '-10% 0px' })
 
@@ -62,7 +68,7 @@ const TimelineItem = ({ item, isLast }: { item: any; isLast: boolean }) => {
       initial={{ opacity: 0, x: -20 }}
       animate={isInView ? { opacity: 1, x: 0 } : {}}
       transition={{ duration: 0.6, ease: 'easeOut' }}
-      className={`${isLast ? '' : 'pb-12 md:pb-16'} relative w-full pl-[30px] md:pl-0 flex flex-col md:flex-row items-start`}
+      className={`${isLast ? '' : 'pb-12 md:pb-16'} relative w-full pl-[35px] md:pl-0 flex flex-col md:flex-row items-start`}
     >
       {/* Icon Replacement for Dots */}
       <div
@@ -105,11 +111,14 @@ const TimelineItem = ({ item, isLast }: { item: any; isLast: boolean }) => {
       </div>
 
       {/* Content */}
-      <div className="md:pl-12 flex-grow">
+      <div className="md:pl-12 flex-grow w-full">
         <h3 className="text-xl font-bold m-0 leading-tight">{item.title}</h3>
 
         <div className="mt-2 text-gray-700">
-          <RichText data={item.content} enableGutter={false} />
+          <ScrollParagraphAnimation
+            text={typeof item.content === 'string' ? item.content : ''}
+            className="text-lg leading-relaxed font-medium"
+          />
         </div>
 
         {item.images && item.images.length > 0 && (

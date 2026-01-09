@@ -858,21 +858,7 @@ export interface TimelineBlock {
     | {
         dateLabel: string;
         title: string;
-        content: {
-          root: {
-            type: string;
-            children: {
-              type: any;
-              version: number;
-              [k: string]: unknown;
-            }[];
-            direction: ('ltr' | 'rtl') | null;
-            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-            indent: number;
-            version: number;
-          };
-          [k: string]: unknown;
-        };
+        content: string;
         images?:
           | {
               image: string | Media;
