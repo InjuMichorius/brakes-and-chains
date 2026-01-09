@@ -854,7 +854,6 @@ export interface Motoren {
  * via the `definition` "TimelineBlock".
  */
 export interface TimelineBlock {
-  title?: string | null;
   items?:
     | {
         dateLabel: string;
@@ -874,6 +873,12 @@ export interface TimelineBlock {
           };
           [k: string]: unknown;
         };
+        images?:
+          | {
+              image: string | Media;
+              id?: string | null;
+            }[]
+          | null;
         id?: string | null;
       }[]
     | null;
@@ -1338,13 +1343,18 @@ export interface MotorOverviewSelect<T extends boolean = true> {
  * via the `definition` "TimelineBlock_select".
  */
 export interface TimelineBlockSelect<T extends boolean = true> {
-  title?: T;
   items?:
     | T
     | {
         dateLabel?: T;
         title?: T;
         content?: T;
+        images?:
+          | T
+          | {
+              image?: T;
+              id?: T;
+            };
         id?: T;
       };
   id?: T;

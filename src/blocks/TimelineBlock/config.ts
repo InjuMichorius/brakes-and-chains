@@ -5,11 +5,6 @@ export const TimelineBlock: Block = {
   interfaceName: 'TimelineBlock',
   fields: [
     {
-      name: 'title',
-      type: 'text',
-      label: 'Main Heading',
-    },
-    {
       name: 'items',
       type: 'array',
       label: 'Timeline Items',
@@ -32,6 +27,19 @@ export const TimelineBlock: Block = {
           type: 'richText',
           label: 'Item Content',
           required: true,
+        },
+        {
+          name: 'images',
+          type: 'array',
+          label: 'Images',
+          fields: [
+            {
+              name: 'image',
+              type: 'upload',
+              relationTo: 'media',
+              required: true,
+            },
+          ],
         },
       ],
     },
