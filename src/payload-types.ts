@@ -238,6 +238,7 @@ export interface Page {
         blockType: 'ImageTextBlock';
       }
     | MotorOverview
+    | TimelineBlock
   )[];
   meta?: {
     title?: string | null;
@@ -850,6 +851,38 @@ export interface Motoren {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TimelineBlock".
+ */
+export interface TimelineBlock {
+  title?: string | null;
+  items?:
+    | {
+        dateLabel: string;
+        title: string;
+        content: {
+          root: {
+            type: string;
+            children: {
+              type: any;
+              version: number;
+              [k: string]: unknown;
+            }[];
+            direction: ('ltr' | 'rtl') | null;
+            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+            indent: number;
+            version: number;
+          };
+          [k: string]: unknown;
+        };
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'TimelineBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "redirects".
  */
 export interface Redirect {
@@ -1188,6 +1221,7 @@ export interface PagesSelect<T extends boolean = true> {
               blockName?: T;
             };
         motorOverview?: T | MotorOverviewSelect<T>;
+        TimelineBlock?: T | TimelineBlockSelect<T>;
       };
   meta?:
     | T
@@ -1296,6 +1330,23 @@ export interface MotorOverviewSelect<T extends boolean = true> {
   titel?: T;
   tekst?: T;
   motoren?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TimelineBlock_select".
+ */
+export interface TimelineBlockSelect<T extends boolean = true> {
+  title?: T;
+  items?:
+    | T
+    | {
+        dateLabel?: T;
+        title?: T;
+        content?: T;
+        id?: T;
+      };
   id?: T;
   blockName?: T;
 }
@@ -1794,6 +1845,24 @@ export interface Header {
  */
 export interface Footer {
   id: string;
+  /**
+   * Description shown under the logo in the footer.
+   */
+  brandDescription?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
   navItems?:
     | {
         link: {
@@ -1845,6 +1914,7 @@ export interface HeaderSelect<T extends boolean = true> {
  * via the `definition` "footer_select".
  */
 export interface FooterSelect<T extends boolean = true> {
+  brandDescription?: T;
   navItems?:
     | T
     | {

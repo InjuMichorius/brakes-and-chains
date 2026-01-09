@@ -53,7 +53,7 @@ export const ImageTextBlock: React.FC<ImageTextBlockProps> = ({
   return (
     <section
       id={blockId || undefined}
-      className={cn('container mx-auto scroll-mt-24 py-10 md:py-20', className)}
+      className={cn('container mx-auto scroll-mt-20 py-10 md:py-20', className)}
     >
       {/* Added items-center to prevent children stretching vertically */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-16 items-center">

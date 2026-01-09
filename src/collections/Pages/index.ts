@@ -6,6 +6,7 @@ import { Archive } from '../../blocks/ArchiveBlock/config'
 import { ImageTextBlock } from '../../blocks/ImageTextBlock/config'
 import { MotorOverview } from '../../blocks/MotorOverview/config'
 import { CallToAction } from '../../blocks/CallToAction/config'
+import { TimelineBlock } from '../../blocks/TimelineBlock/config'
 import { Content } from '../../blocks/Content/config'
 import { FormBlock } from '../../blocks/Form/config'
 import { MediaBlock } from '../../blocks/MediaBlock/config'
@@ -82,6 +83,7 @@ export const Pages: CollectionConfig<'pages'> = {
                 FormBlock,
                 ImageTextBlock,
                 MotorOverview,
+                TimelineBlock,
               ],
               required: true,
               admin: {

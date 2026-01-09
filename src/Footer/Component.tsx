@@ -7,10 +7,12 @@ import type { Footer } from '@/payload-types'
 import { CMSLink } from '@/components/Link'
 import { Logo } from '@/components/Logo/Logo'
 import { Mail, Phone } from 'lucide-react'
+import RichText from '@/components/RichText'
 
 export async function Footer() {
   const footerData: Footer = await getCachedGlobal('footer', 1)()
   const navItems = footerData?.navItems || []
+  const brandDescription = footerData?.brandDescription || null
 
   return (
     <footer className="relative mt-auto bg-black text-white border-t border-white/10">
@@ -37,10 +39,12 @@ export async function Footer() {
             <Logo />
           </Link>
 
-          <p className="text-sm text-white/70 max-w-sm leading-relaxed">
-            Van oude roestbak tot motormonster. Passie voor motoren, oog voor detail, en altijd
-            eerlijk. Ontdek de collectie en vind jouw volgende rit.
-          </p>
+          {/* Add brand description */}
+          {brandDescription && (
+            <div className="text-white/70 max-w-sm">
+              <RichText data={brandDescription} enableGutter={false} />
+            </div>
+          )}
 
           <div className="flex items-center gap-4">
             <a

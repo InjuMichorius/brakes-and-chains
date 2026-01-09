@@ -9,6 +9,7 @@ import { FormBlock } from '@/blocks/Form/Component'
 import { MediaBlock } from '@/blocks/MediaBlock/Component'
 import { ImageTextBlock } from '@/blocks/ImageTextBlock/Component'
 import { MotorOverview } from '@/blocks/MotorOverview/Component'
+import { TimelineBlock } from '@/blocks/TimelineBlock/Component'
 
 import type {
   ArchiveBlock as ArchiveBlockProps,
@@ -39,6 +40,7 @@ const blockComponents: Record<string, BlockComponent> = {
   mediaBlock: MediaBlock,
   ImageTextBlock: ImageTextBlock,
   motorOverview: MotorOverview,
+  TimelineBlock: TimelineBlock,
 }
 
 export const RenderBlocks: React.FC<{

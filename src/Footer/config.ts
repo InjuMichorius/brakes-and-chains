@@ -2,6 +2,7 @@ import type { GlobalConfig } from 'payload'
 
 import { link } from '@/fields/link'
 import { revalidateFooter } from './hooks/revalidateFooter'
+import { defaultLexical } from '@/fields/defaultLexical'
 
 export const Footer: GlobalConfig = {
   slug: 'footer',
@@ -9,6 +10,16 @@ export const Footer: GlobalConfig = {
     read: () => true,
   },
   fields: [
+    {
+      name: 'brandDescription',
+      type: 'richText',
+      editor: defaultLexical,
+      label: 'Brand Description',
+      required: false,
+      admin: {
+        description: 'Description shown under the logo in the footer.',
+      },
+    },
     {
       name: 'navItems',
       type: 'array',
