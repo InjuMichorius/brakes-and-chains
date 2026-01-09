@@ -70,51 +70,68 @@ const TimelineItem = ({
   total: number
   progress: MotionValue<number>
 }) => {
-  // Calculate the threshold for this specific item
-  // e.g. if there are 4 items, item 0 is at 0, item 1 at 0.33, etc.
-  const threshold = index / (total - 1 || 1)
+  /**
+   * 1. Calculate the trigger point.
+   * Since the line grows from 0 to 1, we divide the progress into segments.
+   * Adding a slight buffer (0.01) ensures the icon turns orange exactly
+   * when the tip of the line reaches the center of the icon.
+   */
+  const offset = 0.03
+  const startTrigger = index / total
 
-  // The icon and border should be gray before the progress line reaches this item, and orange after
-  const iconColor = useTransform(progress, [threshold - 0.01, threshold], ['#d1d5db', '#f97316'])
-  const borderColor = useTransform(progress, [threshold - 0.01, threshold], ['#d1d5db', '#f97316'])
-  const fillOpacity = useTransform(progress, [threshold - 0.01, threshold], [0, 1])
+  // Instantly switch color when progress passes the trigger
+  const iconColor = useTransform(
+    progress,
+    [0, startTrigger - offset, startTrigger, 1],
+    ['#d1d5db', '#d1d5db', '#f97316', '#f97316'],
+  )
+  const borderColor = useTransform(
+    progress,
+    [0, startTrigger - offset, startTrigger, 1],
+    ['#e5e7eb', '#e5e7eb', '#f97316', '#f97316'],
+  )
+  const iconScale = useTransform(progress, [0, 1], [1, 1])
 
   return (
     <motion.li
-      initial={{ opacity: 0, x: -10 }}
-      whileInView={{ opacity: 1, x: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.5 }}
       className={`${isLast ? '' : 'pb-12 md:pb-16'} relative w-full pl-[35px] md:pl-0 flex flex-col md:flex-row items-start`}
     >
-      {/* Dynamic Icon Wrapper */}
+      {/* Icon Wrapper */}
       <motion.div
-        style={{ borderColor }}
+        style={{
+          borderColor,
+          scale: iconScale,
+          borderWidth: '2px',
+        }}
         className={cn(
-          'absolute z-10 bg-white flex items-center justify-center border p-2 rounded-full transition-shadow duration-300',
+          'absolute z-10 bg-white flex items-center justify-center p-2 rounded-full transition-shadow duration-200',
           'top-[-4px] left-[-7px] md:left-[144px]',
         )}
       >
-        <motion.div style={{ color: iconColor, fillOpacity }}>
+        <motion.div style={{ color: iconColor }}>
           <FlagTriangleRight className="h-4 w-4 fill-current" strokeWidth={2.5} />
         </motion.div>
       </motion.div>
 
       {isLast && (
         <motion.div
-          style={{ borderColor }}
+          style={{
+            borderColor,
+            scale: iconScale,
+            borderWidth: '2px',
+          }}
           className={cn(
             'absolute z-10 bg-white flex items-center justify-center border p-2 rounded-full',
             'bottom-[0] left-[-7px] md:left-[144px]',
           )}
         >
-          <motion.div style={{ color: iconColor, fillOpacity }}>
+          <motion.div style={{ color: iconColor }}>
             <Flag className="h-4 w-4 fill-current" strokeWidth={2.5} />
           </motion.div>
         </motion.div>
       )}
 
-      {/* Date Bubble */}
+      {/* Date Label */}
       <div className={cn('md:w-[140px] md:text-right md:pr-8 shrink-0', 'mb-2 md:mb-0')}>
         <div className="inline-block px-4 py-1 bg-orange-500 text-white text-sm font-semibold rounded-full whitespace-nowrap">
           {item.dateLabel}
@@ -124,7 +141,6 @@ const TimelineItem = ({
       {/* Content */}
       <div className="md:pl-12 flex-grow w-full">
         <h3 className="text-xl font-bold m-0 leading-tight">{item.title}</h3>
-
         <div className="mt-2 text-gray-700">
           <ScrollParagraphAnimation
             text={typeof item.content === 'string' ? item.content : ''}
