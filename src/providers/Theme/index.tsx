@@ -24,12 +24,15 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
     if (themeToSet === null) {
       window.localStorage.removeItem(themeLocalStorageKey)
       const implicitPreference = getImplicitPreference()
-      document.documentElement.setAttribute('data-theme', implicitPreference || '')
+      // document.documentElement.setAttribute('data-theme', implicitPreference || '') TODO:add dark mode
+      document.documentElement.setAttribute('data-theme', 'light')
       if (implicitPreference) setThemeState(implicitPreference)
     } else {
       setThemeState(themeToSet)
-      window.localStorage.setItem(themeLocalStorageKey, themeToSet)
-      document.documentElement.setAttribute('data-theme', themeToSet)
+      // window.localStorage.setItem(themeLocalStorageKey, themeToSet) TODO:add dark mode
+      // document.documentElement.setAttribute('data-theme', themeToSet) TODO:add dark mode
+      window.localStorage.setItem(themeLocalStorageKey, 'light')
+      document.documentElement.setAttribute('data-theme', 'light')
     }
   }, [])
 
@@ -47,8 +50,10 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
       }
     }
 
-    document.documentElement.setAttribute('data-theme', themeToSet)
-    setThemeState(themeToSet)
+    // document.documentElement.setAttribute('data-theme', themeToSet) TODO:add dark mode
+    // setThemeState(themeToSet) TODO:add dark mode
+    document.documentElement.setAttribute('data-theme', 'light')
+    setThemeState('light')
   }, [])
 
   return <ThemeContext value={{ setTheme, theme }}>{children}</ThemeContext>
